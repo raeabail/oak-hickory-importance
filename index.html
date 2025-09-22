@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Environmental Importance of Oak Hickory Ecosystems in Southern Indiana</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="rail-wrap">
+      <button class="arrow left" aria-label="Scroll left">◀</button>
+      <div class="rail" id="rail" tabindex="0" aria-label="Oak–Hickory flow">
+        <button class="node" data-sheet="functionality">
+          <span class="dot"></span><h3>Environmental Functionality</h3>
+          <p>Roots, recharge, and watershed regulation.</p>
+          <span class="chip">Hydrology</span>
+        </button>
+
+        <button class="node" data-sheet="structure">
+          <span class="dot"></span><h3>Structural Diversity &amp; Habitat</h3>
+          <p>Light reaching the ground drives diversity.</p>
+          <span class="chip">Understory</span>
+        </button>
+
+        <button class="node" data-sheet="biodiversity">
+          <span class="dot"></span><h3>Biodiversity &amp; Wildlife</h3>
+          <p>Mast + ground layer support food webs.</p>
+          <span class="chip">Cascading benefits</span>
+        </button>
+
+        <button class="node" data-sheet="keystone">
+          <span class="dot"></span><h3>Keystone Species</h3>
+          <p>Oaks + “Birder’s Dozen” birds.</p>
+          <span class="chip">Management ties</span>
+        </button>
+      </div>
+      <button class="arrow right" aria-label="Scroll right">▶</button>
+    </div>
+
+    <!-- Docked panel (expands below rail, no overlay) -->
+    <section class="sheet" id="sheet" aria-modal="false" role="region">
+      <div class="bar"></div>
+      <button class="close" id="close" aria-label="Close details">Close</button>
+      <div class="inner" id="sheetContent"></div>
+    </section>
+  </div>
+
+  <script>
+    // Content payload
+    const SHEETS = {
+      functionality: {
+        title: "Environmental Functionality",
+        html:
+          '<div class="cols">' +
+            /* LEFT COLUMN */
+            '<div>' +
+              '<figure class="heroimg">' +
+                '<img src="assets/environmental_func.webp" alt="Open oak woodland with sunlit grasses">' +
+              '</figure>' +
+              '<p>Ecologically, oak–hickory forests play a foundational role in stabilizing and enriching landscapes. By reducing erosion, promoting groundwater recharge, and regulating hydrology, oak roots provide stability that reaches far beyond the forest itself, sustaining whole watersheds.</p>' +
+              '<div class = "badge-group" style="margin-top:.8rem">' +
+                '<span class="badge">Watershed stability</span> ' +
+                '<span class="badge">Soil + slope protection</span> ' +
+                '<span class="badge">Recharge + baseflow</span> ' +
+                '<span class="badge">Fire-climate buffer</span>' +
+              '</div>' +
+            '</div>' +
+
+            /* RIGHT COLUMN */
+            '<div>' +
+              '<details open>' +
+                '<summary style="text-align:center;">How do oaks stabilize water, soil, and climate?</summary>' +
+                '<div class="panel">' +
+                  '<ul style="margin:.2rem 0 .2rem; padding-left:1.1rem">' +
+                    '<li><strong>Soil &amp; slope stability:</strong> Root networks bind shallow soils, reducing erosion and landslides.</li>' +
+                    '<li><strong>Water storage &amp; release:</strong> Leaf litter and roots slow storm runoff while boosting infiltration.</li>' +
+                    '<li><strong>Microclimate regulation:</strong> Open canopies maintain cooler soils and steadier moisture.</li>' +
+                    '<li><strong>Fire &amp; resilience:</strong> Disturbance-adapted structure moderates fire behavior and drought stress.</li>' +
+                  '</ul>' +
+                '</div>' +
+              '</details>' +
+
+              '<div class="gallery" style="margin-top:.4rem; display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center;">' +
+                '<img src="assets/soil_stabilization.jpg" alt="Soil stabilization">' +
+                '<img src="assets/prescribed_fire.jpg" alt="Fire">' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+      },
+      
+      structure: {
+        title: "Structural Diversity & Habitat",
+        html:
+          '<div class="cols">' +
+            /* LEFT COLUMN */
+            '<div>' +
+              '<figure class="heroimg">' +
+                '<img src="assets/structural_diversity.jpg" alt="Sunlight filtering into a diverse oak understory">' +
+              '</figure>' +
+              '<p>The open canopy structure typical of oak woodlands allows sunlight to reach the forest floor, supporting a rich herbaceous understory. This layer supports a wide range of pollinators, reptiles, invertebrates, and birds, contributing to high overall biodiversity. These environmental functions build ecosystem resilience and maintain high levels of biodiversity. </p>' +
+              '<div class="badge-group">' +
+                '<span class="badge">Light-powered understory</span>' +
+                '<span class="badge">Pollinator habitat</span>' +
+                '<span class="badge">Structural complexity</span>' +
+                '<span class="badge">Resilience to change</span>' +
+                '<span class="badge">Disturbance-dependent species</span>' +
+              '</div>' +
+            '</div>' +
+
+            /* RIGHT COLUMN */
+            '<div>' +
+              '<details open>' +
+                '<summary style="text-align:center;">How does light shape biodiversity in oak ecosystems?</summary>' +
+                '<div class="panel">' +
+                  '<ul style="margin:.2rem 0 .2rem; padding-left:1.1rem">' +
+                    '<li><strong>Herbaceous richness:</strong> Sunlight supports diverse ground flora of grasses, forbs, and sedges.</li>' +
+                    '<li><strong>Pollinators &amp; insects:</strong> Flowering understory plants sustain bees, moths, and butterflies.</li>' +
+                    '<li><strong>Birds &amp; reptiles:</strong> Open ground layers provide foraging habitat and nesting space.</li>' +
+                    '<li><strong>Soils &amp; microclimate:</strong> Canopy gaps regulate ground temperature and moisture, helping understory species thrive.</li>' +
+                  '</ul>' +
+                '</div>' +
+              '</details>' +
+
+              '<div class="gallery">' +
+                '<img src="assets/pollinators.jpg" alt="Pollinator on oak">' +
+                '<img src="assets/understory.jpeg" alt="Oak understory with forbs">' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+      },
+      
+      biodiversity: {
+        title: "Biodiversity & Wildlife",
+        html:
+          '<div class="cols">' +
+            /* LEFT COLUMN */
+            '<div>' +
+              '<figure class="heroimg">' +
+                '<img src="assets/foodweb.jpg" alt="Food web">' +
+              '</figure>' +
+              '<p>Mast-producing oaks and hickories feed over 90 species of birds and mammals, including turkey, deer, squirrels, and blue jays. In these ecosystems, it is often the ground layer, not just the canopy, that harbors the greatest species richness. Restoration of open oak-hickory systems thus has cascading ecological benefits, especially for regional and migratory species that depend on disturbance-maintained habitats.</p>' +
+              '<div class="badge-group">' +
+                '<span class="badge">Mast-driven food webs</span>' +
+                '<span class="badge">Ground-layer diversity</span>' +
+                '<span class="badge">Pollinator support</span>' +
+                '<span class="badge">Wildlife habitat</span>' +
+              '</div>' +
+            '</div>' +
+
+            /* RIGHT COLUMN */
+            '<div>' +
+              '<details open>' +
+                '<summary style="text-align:center;">How do oak woodlands support wildlife?</summary>' +
+                '<div class="panel">' +
+                  '<ul style="margin:.2rem 0 .2rem; padding-left:1.1rem">' +
+                    '<li><strong>Mammals:</strong> Squirrels, deer, and bears rely on acorns and nuts, stabilizing food supplies across seasons.</li>' +
+                    '<li><strong>Birds:</strong> Wild turkeys, blue jays, and warblers depend on mast and insects sustained by oak–hickory ecosystems.</li>' +
+                    '<li><strong>Insects:</strong> Oaks host over 530 caterpillar species, fueling songbird reproduction and higher food webs.</li>' +
+                    '<li><strong>Ground layer species:</strong> Disturbance-maintained understories harbor the greatest richness, supporting pollinators, herptiles, and migratory birds.</li>' +
+                  '</ul>' +
+                '</div>' +
+              '</details>' +
+
+              '<div class="gallery">' +
+                '<img src="assets/acorns.jpeg" alt="Acorns on forest floor">' +
+                '<img src="assets/caterpillar.webp" alt="Caterpilla on oak leaf">' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+      },
+
+      keystone: {
+        title: "Keystone Species",
+        html:
+          '<div class="cols" style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">' +
+            /* LEFT COLUMN */
+             '<div class="col-left" style="flex:1; min-width:320px;">' +
+              /* Oak */
+              '<div>' +
+                '<details data-group="keystone" open>' +
+                  '<summary style="text-align:center; cursor:pointer;">' +
+                    '<h3 style="margin:.2rem 0; color:#0a2f28;">Oaks</h3>' +
+                    '<p style="margin:0; font-size:.8rem; color:#555;">Dominant keystone of upland hardwood forests</p>' +
+                  '</summary>' +
+                  '<div class="panel" style="background:linear-gradient(180deg,#f7fbf9,#ffffff); border:1px solid #dceee8; border-radius:14px; padding:12px 14px; box-shadow:0 1px 6px rgba(16,50,38,.08);">' +
+                    '<div class="gallery" style="position:relative; margin-bottom:.8rem;">' +
+                      '<img src="assets/oak_seedlings.jpeg" alt="Oak Seedlings" style="width:100%; height:100%; display:block; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); transition:transform .25s ease;">' +
+                      '<span style="position:absolute; top:.5rem; left:.5rem; background:#0f4a3e; color:#fff; font-size:.72rem; padding:.15rem .5rem; border-radius:999px; letter-spacing:.02em;">Keystone</span>' +
+                    '</div>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e; font-style:italic;">Oaks anchor biodiversity by feeding wildlife, hosting insects, and shaping entire forest systems.</p>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e;"><strong>Mast:</strong> A mature oak can produce up to 10,000 acorns in a mast year, feeding more than 100 species. For deer, turkeys, bears, and squirrels, acorns make up as much as 75% of fall diets.</p>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e;"><strong>Invertebrate host:</strong> Oaks (<em>Quercus</em>) support <strong>500+ caterpillar species</strong>, more than any U.S. tree genus. One chickadee brood requires 6,000–9,000 caterpillars, and oak foliage makes that possible.</p>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e;"><strong>Forest structure:</strong> Living 200–400 years and reaching 100 ft tall, oaks create open canopies that sustain diverse herbs, grasses, and pollinator plants. Their roots and litter regulate water and nutrient cycles.</p>' +
+                    '<div style="margin:.6rem 0 .1rem; padding:.6rem .7rem; background:#fff8e7; border:1px solid #f2e4c2; border-radius:10px;">' +
+                      '<p style="margin:0; color:#7a5c00;"><strong>Management:</strong> Midstory removal (2–10″ DBH maples/beech), prescribed fire every 3–7 years, crop tree release to expand acorn producers, and retention of large seed oaks for future regeneration.</p>' +
+                    '</div>' +
+                  '</div>' +
+                '</details>' +
+              '</div>' +
+          
+                /* Hickory*/
+              '<div>' +
+                '<details data-group="keystone">' +
+                  '<summary style="text-align:center; cursor:pointer;">' +
+                    '<h3 style="margin:.2rem 0; color:#0a2f28;">Hickories</h3>' +
+                    '<p style="margin:0; font-size:.8rem; color:#555;">Co-dominant with oaks in upland forests</p>' +
+                  '</summary>' +
+                  '<div class="panel" style="background:linear-gradient(180deg,#f7fbf9,#ffffff); border:1px solid #dceee8; border-radius:14px; padding:12px 14px; box-shadow:0 1px 6px rgba(16,50,38,.08);">' +
+                    '<div class="gallery" style="position:relative; margin-bottom:.8rem;">' +
+                      '<img src="assets/hickory_seedling.jpg" alt="Mature hickory with shaggy bark" style="width:100%; height:100%; display:block; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); transition:transform .25s ease;">' +
+                      '<span style="position:absolute; top:.5rem; left:.5rem; background:#0f4a3e; color:#fff; font-size:.72rem; padding:.15rem .5rem; border-radius:999px; letter-spacing:.02em;">Keystone</span>' +
+                    '</div>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e; font-style:italic;">Hickories provide dense, high-energy food, roosting habitat, and structural resilience that sustain wildlife alongside oaks.</p>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e;"><strong>Mast:</strong> Hickory nuts carry ~2× the energy of acorns. A good tree can yield 30–60 lbs of nuts, feeding turkeys, foxes, woodpeckers, and bears. Their calorie density is critical for overwintering wildlife.</p>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e;"><strong>Invertebrate host:</strong> Hickories (<em>Carya</em>) support <strong>200+ insect species</strong>, including key moths that feed breeding songbirds.</p>' +
+                    '<p style="margin:.4rem 0 .8rem; color:#0f4a3e;"><strong>Forest structure:</strong> Hickories live 200–300 years and grow 80–120 ft tall. Shagbark hickories provide <strong>roost sites for endangered Indiana bats</strong>. Their deep roots improve storm resilience and water infiltration.</p>' +
+                    '<div style="margin:.6rem 0 .1rem; padding:.6rem .7rem; background:#fff8e7; border:1px solid #f2e4c2; border-radius:10px;">' +
+                      '<p style="margin:0; color:#7a5c00;"><strong>Management:</strong> Pair with oaks in shelterwood harvests, use prescribed fire every 3–7 years, retain shaggy-barked hickories for bat roosts, and apply crop tree release to boost mast production.</p>' +
+                    '</div>' +
+                  '</div>' +
+                '</details>' +
+              '</div>' +
+            '</div>' +
+
+           /* RIGHT COLUMN */
+            '<div id="kbirds" class="col-right" style="flex:1; min-width:320px;">' +
+              '<h3 style="margin:.2rem 0 .3rem; color:#0a2f28; text-align:center;">“Birder’s Dozen”</h3>' +
+                '<p style="margin:.2rem 0 .2rem; text-align:center;">' +
+                  'Each species signals key oak–hickory habitat conditions.</p>' +
+                '<ul style="margin:.2rem 0 .8rem; font-size:.9rem; color:#0f4a3e; text-align:left; display:inline-block;">' +
+                  '<li><span style="color:#e5d295; font-weight:700;">Pale goldenrod = Obligate</span> (depend heavily on oak–hickory ecosystems)</li>' +
+                  '<li><span style="color:#a5bbb0; font-weight:700;">Honeydew = Strong Associate</span> (benefit most in oak–hickory but use other hardwoods)</li>' +
+                  '<li><span style="color:#b8bace; font-weight:700;">Lavender = Broad Hardwood</span> (use oak–hickory among a wider set of habitats)</li>' +
+                '</ul>' +
+
+
+              /* OBLIGATES */
+              '<details data-group="obligate">' +
+                '<summary style="text-align:center;">Red-headed Woodpecker</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/rhwo.jpg" alt="Red-headed Woodpecker on snag"></div>' +
+                  '<p><strong>Habitat:</strong> Oak woodlands, savannas, and edges maintained by disturbance and fire.</p>' +
+                  '<p><strong>Territory:</strong> About 7–20 acres in summer around mast trees and snags; 0–3 acres in winter near mature oaks.</p>' +
+                  '<p><strong>Nesting:</strong> Excavates cavities in dead/decaying oaks; cavities are reused by many secondary nesters.</p>' +
+                  '<p><strong>Food:</strong> Acorns and beechnuts in winter; insects (flying and wood-boring) and fruits in breeding season.</p>' +
+                  '<p><strong>Keystone role:</strong> Ecosystem engineer creating cavities and linking oak mast to a wide suite of wildlife.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="obligate">' +
+                '<summary style="text-align:center;">Cerulean Warbler</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/cerw.jpg" alt="Cerulean Warbler in canopy"></div>' +
+                  '<p><strong>Habitat:</strong> Large, mature oak–hickory tracts with canopy gaps and big dominant trees.</p>' +
+                  '<p><strong>Territory:</strong> Highest densities where layered canopy and gaps increase light and insect prey.</p>' +
+                  '<p><strong>Nesting:</strong> Upper-canopy nests near gaps; responds to shelterwood or midstory removal that retains dominant oaks.</p>' +
+                  '<p><strong>Food:</strong> Canopy insects (especially caterpillars) supported by oaks’ high host counts.</p>' +
+                  '<p><strong>Keystone signal:</strong> Flags high-quality, mature oak structure with managed gaps and retained giants.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="obligate">' +
+                '<summary style="text-align:center;">Eastern Whip-poor-will</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/whip.jpg" alt="Eastern Whip-poor-will on leaf litter"></div>' +
+                  '<p><strong>Habitat:</strong> Open-understory woodlands with moderate canopy cover and ample leaf litter.</p>' +
+                  '<p><strong>Territory:</strong> Occupies patches where ground is open enough for aerial hawking of insects.</p>' +
+                  '<p><strong>Nesting:</strong> Ground-nesting on leaf litter; needs low shrub density and patchy light.</p>' +
+                  '<p><strong>Food:</strong> Nocturnal aerial insects that proliferate in light-maintained oak systems.</p>' +
+                  '<p><strong>Keystone signal:</strong> Responds to restored savanna structure and benefits from midstory thinning and low-intensity fire.</p>' +
+                '</div>' +
+              '</details>' +
+
+              /* STRONG ASSOCIATES */
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">Wood Thrush</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/woodthrush.jpg" alt="Wood Thrush in shaded understory"></div>' +
+                  '<p><strong>Habitat:</strong> Mature, largely unfragmented deciduous forest with an open, leaf-littered floor.</p>' +
+                  '<p><strong>Territory:</strong> Centers on interior forest patches with moist microsites and rich invertebrate prey.</p>' +
+                  '<p><strong>Nesting:</strong> Cup nests in lower/mid canopy; benefits when midstory is thinned but interior is retained.</p>' +
+                  '<p><strong>Food:</strong> Ground invertebrates and fruits tied to diverse understory supported by oak light regimes.</p>' +
+                  '<p><strong>Keystone signal:</strong> Presence indicates intact, functional oak forest structure and low fragmentation.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">Hooded Warbler</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/hooded_warbler.jpg" alt="Hooded Warbler in dense shrubs"></div>' +
+                  '<p><strong>Habitat:</strong> Dense shrub layers in canopy gaps and edges within oak–hickory forests.</p>' +
+                  '<p><strong>Territory:</strong> Tracks patchy light and shrub density produced by selective harvests or natural disturbance.</p>' +
+                  '<p><strong>Nesting:</strong> Low shrub nests; depends on persistent, dense understory.</p>' +
+                  '<p><strong>Food:</strong> Foliage-gleaned insects linked to vigorous shrub growth.</p>' +
+                  '<p><strong>Keystone signal:</strong> Indicates healthy gap dynamics and layered structure in oak systems.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">Worm-eating Warbler</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/worm_eating_warbler.jpg" alt="Worm-eating Warbler on oak slope"></div>' +
+                  '<p><strong>Habitat:</strong> Oak-dominated slopes and ravines with shrub cover and deep leaf litter.</p>' +
+                  '<p><strong>Territory:</strong> Favors steep, well-drained hillsides with intact litter and shrub layers.</p>' +
+                  '<p><strong>Nesting:</strong> Ground nests concealed in leaf litter on slopes.</p>' +
+                  '<p><strong>Food:</strong> Caterpillars and leaf-litter insects gleaned from curled and dead leaves.</p>' +
+                  '<p><strong>Keystone signal:</strong> Signals oak slopes where leaf-litter and shrub layers persist.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">Yellow-breasted Chat</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/yellow_breasted_chat.jpg" alt="Yellow-breasted Chat in thicket"></div>' +
+                  '<p><strong>Habitat:</strong> Dense early-successional shrub thickets adjacent to or within oak forest matrices.</p>' +
+                  '<p><strong>Territory:</strong> Uses large shrub patches created by patch/clearcuts or storm gaps.</p>' +
+                  '<p><strong>Nesting:</strong> Low in dense shrubs; needs thick cover for concealment.</p>' +
+                  '<p><strong>Food:</strong> Insects and fruits produced by vigorous young growth after disturbance.</p>' +
+                  '<p><strong>Keystone signal:</strong> Indicates active disturbance and successional diversity complementing oak woodlands.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">American Woodcock</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/american_woodcock.jpg" alt="American Woodcock in display field"></div>' +
+                  '<p><strong>Habitat:</strong> Mosaic of display openings, moist soils, and dense young forest near oak stands.</p>' +
+                  '<p><strong>Territory:</strong> Uses singing/roost fields with nearby foraging thickets; responds to rotational field management.</p>' +
+                  '<p><strong>Nesting:</strong> Ground nests in dense cover near moist soils.</p>' +
+                  '<p><strong>Food:</strong> Earthworms and soil invertebrates; benefits from litter/soil conditions under oak canopies.</p>' +
+                  '<p><strong>Keystone signal:</strong> Requires the field–thicket–woods mosaic, which evidence of intentional, disturbance-based management.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">Eastern Towhee</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/eastern_towhee.jpg" alt="Eastern Towhee in shrub layer"></div>' +
+                  '<p><strong>Habitat:</strong> Dense shrub/sapling cover with abundant leaf litter for ground foraging and nesting.</p>' +
+                  '<p><strong>Territory:</strong> Occupies patches where shrub density is maintained by uneven-age or regeneration harvests.</p>' +
+                  '<p><strong>Nesting:</strong> Ground or low shrub nests; needs leaf litter and protective thickets.</p>' +
+                  '<p><strong>Food:</strong> Seeds, fruits, and insects produced in shrub-rich understory of oak systems.</p>' +
+                  '<p><strong>Keystone signal:</strong> Indicates successful understory regeneration and litter dynamics in oak woodlands.</p>' +
+                '</div>' +
+              '</details>' +
+
+              /* CUCKOOS (Yellow-billed & Black-billed) */
+              '<details data-group="associate">' +
+                '<summary style="text-align:center;">Yellow-billed & Black-billed Cuckoos</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery" style="margin-bottom:.5rem;">' +
+                    '<img src="assets/ybcu.jpg" alt="Yellow-billed Cuckoo perched">' +
+                    '<img src="assets/bbcu.jpg" alt="Black-billed Cuckoo perched">' +
+                  '</div>' +
+                  '<p><strong>Habitat:</strong> Open woodlands, shrubby edges, and riparian forests near oak stands. Both species favor habitats with caterpillar-rich canopies and dense understory thickets.</p>' +
+                  '<p><strong>Territory:</strong> Ranges are variable, often between 20–120 acres, expanding or contracting with insect prey availability.</p>' +
+                  '<p><strong>Nesting:</strong> Placed low in shrubs or small trees, often near water or in humid thickets. Nest concealment is critical.</p>' +
+                  '<p><strong>Food:</strong> Specialize on large insects, especially caterpillars and cicadas, but will also eat berries, soft mast (hawthorn, elderberry, mulberry, grape), and small vertebrates.</p>' +
+                  '<p><strong>Foraging & Management:</strong> Benefit from open oak forests with dense shrub patches. Midstory thinning and single-tree or group selection harvests that create light gaps enhance visibility for foraging and sustain insect prey. Retaining soft mast species in the understory further supports their diet.</p>' +
+                  '<p><strong>Keystone role:</strong> Act as insect regulators in oak ecosystems, consuming outbreak species like tent caterpillars that few other birds will eat. Their presence signals healthy insect prey webs tied to oak canopies and understory mosaics.</p>' +
+                '</div>' +
+              '</details>' +
+
+              /* BROAD HARDWOODS */
+              '<details data-group="generalist">' +
+                '<summary style="text-align:center;">Baltimore Oriole</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/baltimore_oriole.jpg" alt="Baltimore Oriole on edge tree"></div>' +
+                  '<p><strong>Habitat:</strong> Big edge and riparian trees within hardwood landscapes, including oak valleys.</p>' +
+                  '<p><strong>Territory:</strong> Responds to retained large trees and complex edges near oak stands.</p>' +
+                  '<p><strong>Nesting:</strong> Woven hanging nest in outer canopy; requires large limb structure.</p>' +
+                  '<p><strong>Food:</strong> Insects and fruit; productivity increases with oak-driven insect abundance.</p>' +
+                  '<p><strong>Indicator:</strong> Highlights the need for legacy trees and riparian corridors across oak–hickory landscapes.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<details data-group="generalist">' +
+                '<summary style="text-align:center;">Eastern Screech-Owl</summary>' +
+                '<div class="panel">' +
+                  '<div class="gallery"><img src="assets/eastern_screech_owl.jpg" alt="Eastern Screech-owl at cavity"></div>' +
+                  '<p><strong>Habitat:</strong> Hardwood forests and edges with abundant cavities and snags; oak stands provide both.</p>' +
+                  '<p><strong>Territory:</strong> Uses patches where cavity resources are maintained by legacy trees and woodpecker activity.</p>' +
+                  '<p><strong>Nesting:</strong> Cavities/snags or nest boxes, often first created by woodpeckers in oaks.</p>' +
+                  '<p><strong>Food:</strong> Small vertebrates and large insects tied to productive oak food webs.</p>' +
+                  '<p><strong>Indicator:</strong> Signals the presence of cavity resources and retained large trees in oak systems.</p>' +
+                '</div>' +
+              '</details>' +
+
+              '<p style="margin:.5rem 0 0; color:#0f4a3e; font-weight:600; text-align:center;">Source: Forestry for the Birds — Pocket Guide (Indiana &amp; Central Hardwoods)</p>' +
+            '</div>' +
+          '</div>'
+      }
+    };
+
+    // DOM refs
+    const rail = document.getElementById('rail');
+    const sheet = document.getElementById('sheet');
+    const sheetContent = document.getElementById('sheetContent');
+    const closeBtn = document.getElementById('close');
+
+    // Open panel (docked; animates height)
+    function openPanel() {
+      // measure target height
+      sheet.classList.add('open');
+      // temporarily set content to measure
+      sheet.style.height = 'auto';
+      const target = sheet.scrollHeight;
+      sheet.style.height = '0px';
+      // kick in next frame
+      requestAnimationFrame(()=> {
+        sheet.style.height = target + 'px';
+      });
+      // after transition, lock to auto so it adapts to viewport
+      sheet.addEventListener('transitionend', onEnd, {once:true});
+      function onEnd(){ sheet.style.height = 'auto'; }
+    }
+    function closePanel() {
+      // animate from current height to 0
+      const current = sheet.scrollHeight;
+      sheet.style.height = current + 'px';
+      requestAnimationFrame(()=> { sheet.style.height = '0px'; });
+      sheet.addEventListener('transitionend', ()=> {
+        sheet.classList.remove('open');
+        sheetContent.innerHTML = '';
+      }, {once:true});
+    }
+
+    // Wire nodes
+    document.querySelectorAll('.node').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.getAttribute('data-sheet');
+        const data = SHEETS[id];
+        if(!data) return;
+        sheetContent.innerHTML = '<h2>' + data.title + '</h2>' + data.html;
+
+        if(id === 'foodweb'){
+          const mount = document.getElementById('foodweb-mount');
+          renderFoodWeb(mount, data.plants);
+        }
+        openPanel();
+        setTimeout(()=> closeBtn.focus(), 60);
+        // ensure rail stays fully visible on small screens
+        const railBox = document.querySelector('.rail-wrap').getBoundingClientRect();
+        if (railBox.top < 0) window.scrollTo({ top: window.scrollY + railBox.top - 12, behavior:'smooth' });
+      });
+    });
+    closeBtn.addEventListener('click', closePanel);
+
+    // Rail arrows
+    const step = () => Math.min(rail.clientWidth*0.7, 520);
+    document.querySelector('.arrow.left').onclick  = ()=> rail.scrollBy({left:-step(), behavior:'smooth'});
+    document.querySelector('.arrow.right').onclick = ()=> rail.scrollBy({left: step(), behavior:'smooth'});
+
+    // Keyboard nav
+    rail.addEventListener('keydown', (e)=>{
+      const nodes = Array.from(document.querySelectorAll('.node'));
+      const active = document.activeElement.classList.contains('node') ? document.activeElement : nodes[0];
+      let idx = nodes.indexOf(active);
+      if(e.key === 'ArrowRight'){ e.preventDefault(); (nodes[idx+1]||nodes[idx]).focus(); nodes[idx+1] && nodes[idx+1].scrollIntoView({behavior:'smooth',inline:'center'})}
+      if(e.key === 'ArrowLeft'){  e.preventDefault(); (nodes[idx-1]||nodes[idx]).focus(); nodes[idx-1] && nodes[idx-1].scrollIntoView({behavior:'smooth',inline:'center'})}
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); active.click(); }
+      if(e.key === 'Escape' && sheet.classList.contains('open')){ closePanel(); }
+    });
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape' && sheet.classList.contains('open')) closePanel();
+    });
+
+    // Food Web SVG (same as before)
+    function renderFoodWeb(container, plants){
+      const NS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(NS,'svg');
+      svg.setAttribute('viewBox','0 0 760 300');
+      svg.setAttribute('width','100%');
+      svg.setAttribute('aria-label','Trees-Insects-Birds food web');
+
+      const style = document.createElementNS(NS,'style');
+      style.textContent =
+        '.fw-text{font:600 12px/1.2 system-ui, sans-serif; fill:#0b3a31}' +
+        '.fw-muted{fill:#5f8e83}' +
+        '.fw-node{fill:#e9f7f1; stroke:#cfeadd}' +
+        '.fw-link{fill:#9dd9c6; opacity:.75; transition:opacity .2s}' +
+        '.fw-link.hidden{opacity:.15}' +
+        '.fw-plant:hover{cursor:pointer}';
+      svg.appendChild(style);
+
+      const gPlants = document.createElementNS(NS,'g');
+      gPlants.setAttribute('transform','translate(20,20)');
+      const gLinks  = document.createElementNS(NS,'g');
+
+      const scale = 0.25, barW = 160, gap = 8;
+      let y = 0;
+      plants.forEach(function(p, i){
+        const grp = document.createElementNS(NS,'g');
+        grp.setAttribute('class','fw-plant');
+        grp.setAttribute('data-i', String(i));
+
+        const r = document.createElementNS(NS,'rect');
+        r.setAttribute('x','0'); r.setAttribute('y', String(y));
+        r.setAttribute('width', String(barW)); r.setAttribute('height', String(p.count*scale));
+        r.setAttribute('rx','8'); r.setAttribute('fill', p.color); r.setAttribute('stroke','#d8b64e'); r.setAttribute('opacity','0.95');
+        grp.appendChild(r);
+
+        const t = document.createElementNS(NS,'text');
+        t.setAttribute('x', String(barW/2)); t.setAttribute('y', String(y + (p.count*scale)/2 + 4));
+        t.setAttribute('text-anchor','middle'); t.setAttribute('class','fw-text');
+        t.textContent = p.name + ' — ' + p.count;
+        grp.appendChild(t);
+
+        grp.addEventListener('mouseenter', function(){ highlight(i,true); });
+        grp.addEventListener('mouseleave', function(){ highlight(i,false); });
+        gPlants.appendChild(grp);
+
+        const link = document.createElementNS(NS,'rect');
+        link.setAttribute('class','fw-link'); link.setAttribute('x','200');
+        link.setAttribute('y', String(y)); link.setAttribute('width','180'); link.setAttribute('height', String(p.count*scale));
+        link.setAttribute('data-i', String(i));
+        gLinks.appendChild(link);
+
+        y += (p.count*scale) + gap;
+      });
+
+      const gInsects = document.createElementNS(NS,'g');
+      gInsects.setAttribute('transform','translate(400,20)');
+      gInsects.innerHTML =
+        '<rect class="fw-node" x="0" y="0" width="140" height="220" rx="12"/>' +
+        '<text class="fw-text" x="70" y="18" text-anchor="middle">Insects</text>' +
+        '<text class="fw-text fw-muted" x="70" y="40" text-anchor="middle">caterpillars</text>' +
+        '<text class="fw-text fw-muted" x="70" y="60" text-anchor="middle">pollinators</text>';
+
+      const gBirds = document.createElementNS(NS,'g');
+      gBirds.setAttribute('transform','translate(580,20)');
+      gBirds.innerHTML =
+        '<rect class="fw-node" x="0" y="0" width="160" height="220" rx="12"/>' +
+        '<text class="fw-text" x="80" y="18" text-anchor="middle">Birds</text>' +
+        '<text class="fw-text fw-muted" x="80" y="40" text-anchor="middle">“Birder’s Dozen”</text>' +
+        '<text class="fw-text" x="80" y="66" text-anchor="middle">Red-headed Woodpecker</text>' +
+        '<text class="fw-text" x="80" y="84" text-anchor="middle">Wood Thrush</text>' +
+        '<text class="fw-text" x="80" y="102" text-anchor="middle">Cerulean Warbler</text>' +
+        '<text class="fw-text" x="80" y="120" text-anchor="middle">Eastern Whip-poor-will</text>' +
+        '<text class="fw-text" x="80" y="138" text-anchor="middle">Hooded/Worm-eating Warblers</text>' +
+        '<text class="fw-text" x="80" y="156" text-anchor="middle">Yellow-breasted Chat</text>' +
+        '<text class="fw-text" x="80" y="174" text-anchor="middle">American Woodcock</text>' +
+        '<text class="fw-text" x="80" y="192" text-anchor="middle">Eastern Towhee</text>' +
+        '<text class="fw-text" x="80" y="210" text-anchor="middle">Baltimore Oriole • Screech-owl</text>';
+
+      svg.appendChild(gPlants);
+      svg.appendChild(gInsects);
+      svg.appendChild(gBirds);
+      svg.appendChild(gLinks);
+
+      container.innerHTML = '';
+      container.appendChild(svg);
+
+      function highlight(i, on){
+        const links = gLinks.querySelectorAll('.fw-link');
+        links.forEach(function(l){ l.classList.add('hidden'); });
+        if(on){
+          gLinks.querySelectorAll('.fw-link[data-i="'+i+'"]').forEach(function(l){ l.classList.remove('hidden'); });
+        }else{
+          links.forEach(function(l){ l.classList.remove('hidden'); });
+        }
+      }
+    }
+  </script>
+</body>
+</html>
