@@ -1,0 +1,233 @@
+:root {
+  --bg:#015f47;           
+  --rail:#0e5a46; --ink:#0f3a31;
+  --card:#ffffff; --accent:#ffcf46; --line:#9dd9c6;
+  --shadow:0 10px 30px rgba(0,0,0,.25); --radius:16px;
+}
+
+/* Page */
+html,body { height:100% }
+body {
+  margin:0;
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:#fff;
+  background:#015f47;
+  padding:clamp(12px,2.5vw,28px);
+}
+.wrap { max-width:1200px; margin:0 auto }
+h1 { margin:.2rem 0 .25rem; font-size:clamp(1.3rem,3.2vw,2rem) }
+p.lead { margin:0 0 .8rem; color:#e3f4ef }
+
+/* Rail container */
+.rail-wrap {
+  position:relative;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:20px;
+  padding:14px 46px;
+  box-shadow:var(--shadow);
+}
+.rail {
+  display:flex; gap:18px; align-items:stretch;
+  overflow:auto; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; scrollbar-width:thin;
+}
+.rail::-webkit-scrollbar { height:8px }
+.rail::-webkit-scrollbar-thumb { background:#1f6a59; border-radius:8px }
+.rail:before {
+  content:""; position:absolute; left:32px; right:32px; top:52%;
+  height:2px;
+  background:linear-gradient(90deg,var(--line),transparent 25%,var(--line) 50%,transparent 75%,var(--line));
+  opacity:.6; pointer-events:none;
+}
+
+/* Nodes */
+.node {
+  min-width:280px; max-width:320px; flex:0 0 auto;
+  background:linear-gradient(180deg,#0c4e42,#083b31);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--radius);
+  padding:.9rem; color:#eafff7; position:relative;
+  scroll-snap-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.node:hover { transform:translateY(-2px); box-shadow:0 12px 26px rgba(0,0,0,.3) }
+.node h3 {margin:0 0 .35rem; font-size:1rem; letter-spacing:.2px; text-align: center;}
+.node p { margin:0; color:#d1f2ea; font-size:.92rem }
+
+.dot {
+  width:14px; height:14px; border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px rgba(255,207,70,.25);
+  display:inline-block;
+  margin-right:.45rem;
+  position:relative;
+  top:-5px;
+}
+
+.chip {
+  display:inline-block; margin-top:.5rem;
+  font-weight:800; font-size:.75rem;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  padding:.2rem .5rem; border-radius:999px;
+}
+
+/* Arrows */
+.arrow {
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:36px; height:36px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.08); color:#fff;
+  display:grid; place-items:center;
+  cursor:pointer; z-index:5; backdrop-filter: blur(2px);
+}
+.arrow:hover { background:rgba(255,255,255,.14) }
+.arrow.left { left:-8px } .arrow.right { right:-8px }
+
+/* Docked panel */
+.sheet {
+  position:relative;
+  margin:14px 0 0;
+  background:var(--card); color:var(--ink);
+  border-radius:18px; box-shadow:0 10px 26px rgba(0,0,0,.28);
+  border:1px solid #e2eee8;
+  overflow:hidden;
+  height:0; overflow:hidden;
+  transition:height .32s cubic-bezier(.2,.7,.2,1);
+}
+.sheet .bar {
+  height:4px; width:52px; border-radius:999px;
+  background:#d7ebe4; margin:10px auto 0;
+}
+.sheet .inner { padding:14px clamp(16px,2.2vw,24px) 24px }
+.sheet h2 { margin:.2rem 0 .4rem; font-size:1.2rem; color:#0a2f28; text-align: center; }
+.sheet .close {
+  position:absolute; right:10px; top:8px;
+  border:1px solid #dcefe8; background:#f6fffb;
+  padding:.35rem .55rem; border-radius:10px;
+  cursor:pointer; color:#014a37; font-weight:700;
+}
+
+.badge {
+  display:inline-block;
+  padding:.25rem .55rem; border-radius:999px;
+  background:#f3fbf8; color:#0b542e;
+  border:1px solid #cfeadd;
+  font-weight:800; font-size:.8rem;
+}
+.badge{ margin-right:.25rem; margin-bottom:.25rem; 
+}
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  margin-top: .8rem;
+  gap: .25rem;
+}
+
+.heroimg img{
+  width:100%;
+  max-height:250px;   
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid #e6efe9;
+  display:block;
+  margin-bottom:.8rem;
+}
+
+/* Layout helpers */
+.cols { display:grid; gap:16px; grid-template-columns: 1.1fr .9fr }
+@media (max-width:900px){ .cols { grid-template-columns: 1fr } }
+
+.media { display:grid; grid-template-columns:80px 1fr; gap:.8rem; align-items:start }
+.media img { width:80px; height:80px; object-fit:cover; border-radius:10px; border:1px solid #e6efe9 }
+
+.gallery { display:flex; justify-content: center; gap:.5rem; flex-wrap:wrap; margin-top:.4rem }
+.gallery img { width:240px; height:168px; object-fit:cover; border-radius:5px; border:1px solid #e6efe9 }
+
+/* Details panels */
+details {
+  border:1px solid #e6efe9; border-radius:14px;
+  overflow:hidden; background:#fff; margin:.6rem 0;
+}
+summary {
+  list-style:none; cursor:pointer;
+  padding:.8rem 2.4rem .8rem 1rem; font-weight:800; position:relative;
+}
+summary::-webkit-details-marker { display:none }
+summary::after {
+  content:"▸"; position:absolute; right:10px; top:50%;
+  transform:translateY(-50%); transition:transform .2s;
+}
+details[open] summary::after { transform:translateY(-50%) rotate(90deg) }
+.panel { padding:.4rem .9rem .8rem }
+
+/* Food web */
+.fw-muted { fill:#5f8e83; font:600 12px/1.2 system-ui,sans-serif }
+.fw-text { fill:#0b3a31; font:600 12px/1.2 system-ui,sans-serif }
+.fw-node { fill:#e9f7f1; stroke:#cfeadd }
+.fw-link { fill:#9dd9c6; opacity:.75; transition:opacity .2s }
+.fw-link.hidden { opacity:.15 }
+
+/* Base style for the bird accordions */
+#kbirds details {
+  border: 1px solid #e6efe9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  margin: .55rem 0;
+}
+
+/* The "tab-like" header row */
+#kbirds details > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .9rem 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  position: relative;
+}
+
+/* remove default marker in webkit */
+#kbirds summary::-webkit-details-marker { display: none; }
+
+/* little chevron on the right */
+#kbirds details > summary::after {
+  content: '▸';
+  position: absolute;
+  right: 12px;
+  transform: rotate(0deg);
+  transition: transform .15s ease;
+}
+#kbirds details[open] > summary::after { transform: rotate(90deg); }
+
+/* Category colors */
+#kbirds details[data-group="obligate"]   > summary { background:#ffe9a6; border-bottom:1px solid #f3d478; }
+#kbirds details[data-group="associate"]  > summary { background:#cfeadd; border-bottom:1px solid #a9d8c5; }
+#kbirds details[data-group="generalist"] > summary { background:#e3e7ff; border-bottom:1px solid #cbd2ff; }
+
+/* keep body readable */
+#kbirds .panel { padding: .8rem 1rem 1rem; }
+
+/* center-first image style */
+#kbirds .gallery { display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap; margin-bottom:.6rem; }
+#kbirds .gallery img { width:240px; height:170px; object-fit:cover; border-radius:12px; border:1px solid #e6efe9; }
+
+/* Legend chips (Keystone Birds) */
+#kbirds .legend{
+  display:flex; gap:.5rem; justify-content:center;
+  margin:.2rem 0 .6rem;
+}
+#kbirds .legend .chip{
+  font-weight:800; padding:.25rem .55rem;
+  border-radius:999px; border:1px solid rgba(0,0,0,.08);
+}
+#kbirds .legend .chip.obligate  { background:#ffe9a6; border-color:#f3d478; }
+#kbirds .legend .chip.associate { background:#cfeadd; border-color:#a9d8c5; }
+#kbirds .legend .chip.generalist{ background:#e3e7ff; border-color:#cbd2ff; }
+
